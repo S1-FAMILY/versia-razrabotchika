@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Волонтёры | S1 CONTEST</title>
+    <meta name="theme-color" content="#02050a">
+    <meta name="description" content="S1 CONTEST 2027 — танцевальный контест и мастер-классы в Ставрополе, 23–24 января 2027.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23bcdff6' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M12 2v20M4 7l16 10M4 17L20 7'/%3E%3C/svg%3E">
+    <link rel="preload" as="image" href="img/ice-wide.jpg" media="(min-aspect-ratio: 1/1)">
+    <link rel="preload" as="image" href="img/ice-tall.jpg" media="(max-aspect-ratio: 1/1)">
+    <script>document.documentElement.classList.add('js')</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="orders.css">
+    <script src="config.js"></script>
+</head>
+<body>
+
+<!-- Фон: аврора, ледяная рамка, снегопад -->
+<div class="aurora" aria-hidden="true"></div>
+<div class="ice-frame" aria-hidden="true"><div class="ice-img"></div></div>
+<canvas id="snow-back" aria-hidden="true"></canvas>
+<canvas id="snow-front" aria-hidden="true"></canvas>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="iceText" x="-4%" y="-12%" width="108%" height="124%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1.7" result="b"/>
+      <feSpecularLighting in="b" surfaceScale="5" specularConstant=".6" specularExponent="26" lighting-color="#ffffff" result="s">
+        <feDistantLight azimuth="235" elevation="52"/>
+      </feSpecularLighting>
+      <feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/>
+      <feComposite in="SourceGraphic" in2="s2" operator="arithmetic" k1="0" k2="1" k3=".6" k4="0"/>
+    </filter>
+    <linearGradient id="snowGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2faff" stop-opacity=".96"/>
+      <stop offset=".16" stop-color="#c9e4f7" stop-opacity=".72"/>
+      <stop offset=".55" stop-color="#5b8fbb" stop-opacity=".26"/>
+      <stop offset="1" stop-color="#0a182a" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="iceHeart" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".5" stop-color="#b9d8ee"/>
+      <stop offset="1" stop-color="#6f9ec0"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<header>
+    <div class="container">
+        <div class="header-content">
+            <div class="logo">S1 CONTEST 2027</div>
+            <button class="mobile-menu-toggle" aria-label="Открыть меню">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav-links">
+                <a href="polozhenie.html">Положение</a>
+                <a href="index.html#about">О событии</a>
+                <a href="index.html#categories">Категории</a>
+                <a href="index.html#registration">Регистрация</a>
+                <a href="index.html#rules">Критерии</a>
+                <a href="index.html#masters">Мастер-классы</a>
+                <a href="order.html">Заказ</a>
+                <a href="index.html#volunteers">Волонтёры</a>
+                <a href="index.html#contacts">Контакты</a>
+            </nav>
+            <a class="dev-credit" href="https://t.me/se_va09" target="_blank" rel="noopener" title="Разработчик сайта"><span>Разработчик</span><b>Андреев Всеволод</b></a>
+        </div>
+    </div>
+</header>
+<div class="mobile-menu-overlay"></div>
+<section class="page-sec"><div class="container">
+  <h1 class="section-title">ВОЛОНТЁРЫ</h1>
+  <div class="form-card vol-card" style="margin-bottom:26px">
+    <h3>Стань частью команды S1 CONTEST</h3>
+    <p style="color:var(--text);line-height:1.7;max-width:680px;margin:0 auto">Нам нужны волонтёры, которые помогут с регистрацией, залом, сценой и гостями. За участие мы начислим волонтёрские часы. Подайте заявку на платформе — и заполните короткую анкету ниже, чтобы мы знали, как с вами связаться.</p>
+    <div class="vol-links">
+      <a class="btn" id="dobro" href="#" target="_blank" rel="noopener">Заявка на Добро.рф</a>
+      <a class="btn-ghost" id="patriot" href="#" target="_blank" rel="noopener" hidden>Заявка через «Патриот»</a>
+    </div>
+  </div>
+  <form id="form-vol" class="form-card" style="max-width:760px;margin:0 auto" novalidate onsubmit="return false">
+    <h3>Анкета волонтёра</h3>
+    <label class="fld"><span>ФИО</span><input name="fio" autocomplete="name"><b class="em">Укажите фамилию и имя</b></label>
+    <label class="fld"><span>Возраст</span><input name="age" type="number" min="12" max="99"><b class="em">Укажите возраст</b></label>
+    <label class="fld"><span>Телефон</span><input name="phone" type="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__"><b class="em">Введите номер телефона</b></label>
+    <label class="fld"><span>Почта</span><input name="email" type="email" autocomplete="email"><b class="em">Введите корректную почту</b></label>
+    <label class="fld"><span>Ник в Telegram или ссылка</span><input name="tg"><b class="em">Укажите ник или ссылку</b></label>
+    <div class="group-t">Когда можете помогать</div>
+    <div class="checks"><label class="opt"><input type="checkbox" name="d" value="23 января"><b>23 января</b></label><label class="opt"><input type="checkbox" name="d" value="24 января"><b>24 января</b></label></div>
+    <p class="em" id="v-err" style="display:none;color:#ffb4b4;font-size:.85rem">Выберите хотя бы один день</p>
+    <label class="fld" style="margin-top:18px"><span>Опыт и пожелания (необязательно)</span><textarea name="note" placeholder="Где хотели бы помогать: регистрация, зал, сцена, гости…"></textarea></label>
+    <label class="opt" style="margin-top:6px"><input type="checkbox" name="agree"><div><b>Согласен(на) на обработку персональных данных</b><small>См. <a href="privacy.html" target="_blank" style="color:var(--ice-2)">политику конфиденциальности</a>. Если вам нет 18 лет, нужно согласие родителей.</small></div></label>
+    <p class="em" id="a-err" style="display:none;color:#ffb4b4;font-size:.85rem">Необходимо согласие на обработку данных</p>
+    <button type="button" class="btn-pay" id="vol-send" style="margin-top:18px">Отправить анкету</button>
+  </form>
+</div></section>
+<div class="overlay" id="ov"></div>
+<script>
+(function(){var C=window.S1_CONFIG,$=function(s){return document.querySelector(s)};
+$('#dobro').href=C.volunteers.dobroUrl;if(C.volunteers.patriotUrl){$('#patriot').href=C.volunteers.patriotUrl;$('#patriot').hidden=false}
+var f=$('#form-vol'),ov=$('#ov');
+f.phone.addEventListener('input',function(){var d=f.phone.value.replace(/\D/g,'');if(d[0]==='8')d='7'+d.slice(1);if(d&&d[0]!=='7')d='7'+d;d=d.slice(0,11);var o=d?'+7':'';if(d.length>1)o+=' ('+d.slice(1,4);if(d.length>=4)o+=') '+d.slice(4,7);if(d.length>=7)o+='-'+d.slice(7,9);if(d.length>=9)o+='-'+d.slice(9,11);f.phone.value=o});
+function show(h){ov.innerHTML='<div class="box">'+h+'</div>';ov.classList.add('on')}
+$('#vol-send').onclick=function(){var ok=true,v=function(n){return f.elements[n].value.trim()},m=function(n,c){var w=f.elements[n].closest('.fld');w.classList.toggle('err',!c);if(!c)ok=false};
+ m('fio',v('fio').split(/\s+/).length>=2);m('age',+v('age')>=12);m('phone',v('phone').replace(/\D/g,'').length>=10);m('email',/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v('email')));m('tg',v('tg').length>=3);
+ var days=[].slice.call(f.querySelectorAll('input[name=d]:checked')).map(function(i){return i.value});$('#v-err').style.display=days.length?'none':'block';if(!days.length)ok=false;
+ $('#a-err').style.display=f.agree.checked?'none':'block';if(!f.agree.checked)ok=false;
+ if(!ok)return;
+ var b=$('#vol-send');b.disabled=true;
+ fetch((C.apiBase||'')+'/api/volunteer',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fio:v('fio'),age:v('age'),phone:v('phone'),email:v('email'),tg:v('tg'),days:days,note:v('note'),agree:true})})
+ .then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'')})})
+ .then(function(){show('<h4>Спасибо, анкета отправлена!</h4><p>Мы свяжемся с вами в Telegram или по телефону. Не забудьте также подать заявку на Добро.рф — так нам будет проще начислить часы.</p><button type="button" class="btn-pay" id="ok">Хорошо</button>');$('#ok').onclick=function(){ov.classList.remove('on')};f.reset()})
+ .catch(function(e){b.disabled=false;show('<h4>Не удалось отправить</h4><p>'+(e.message||'Сервер недоступен. Напишите организаторам: '+C.organizer.tg)+'</p><button type="button" class="btn-pay" id="ok">Закрыть</button>');$('#ok').onclick=function(){ov.classList.remove('on')}})};
+f.querySelectorAll('.fld input').forEach(function(i){i.addEventListener('input',function(){i.closest('.fld').classList.remove('err')})});
+f.querySelectorAll('.opt input').forEach(function(i){i.addEventListener('change',function(){i.closest('.opt').classList.toggle('sel',i.checked)})});
+})();
+</script>
+
+<footer>
+    <div class="drift" aria-hidden="true">
+        <svg class="d-back" viewBox="0 0 1440 160" preserveAspectRatio="none"><path d="M0 70 C84 50 168 33 240 50 C324 55 408 75 480 78 C564 68 648 21 720 33 C804 77 888 28 960 50 C1044 46 1128 66 1200 96 C1284 26 1368 41 1440 70 V160 H0 Z" fill="url(#snowGrad)"/></svg>
+        <svg class="d-front" viewBox="0 0 1440 160" preserveAspectRatio="none"><path d="M0 95 C84 80 168 59 240 92 C324 77 408 72 480 93 C564 78 648 53 720 76 C804 58 888 102 960 113 C1044 92 1128 45 1200 70 C1284 55 1368 60 1440 95 V160 H0 Z" fill="url(#snowGrad)"/></svg>
+    </div>
+    <div class="container">
+        <h3>S1 CONTEST 2027</h3>
+        <div class="social-links">
+            <a href="https://instagram.com/s1family_contest" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="https://t.me/s1_contest" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a>
+        </div>
+        <p class="copyright">Разработчик сайта: Андреев Всеволод (тг: <a href="https://t.me/se_va09" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">@se_va09</a>)</p>
+        <p class="copyright footnote-ig">Instagram принадлежит компании Meta, признанной экстремистской организацией и запрещённой на территории РФ.</p>
+        <p class="copyright">© 2027 S1 CONTEST — Ставрополь. Все права защищены. 23–24 января 2027</p>
+    </div>
+</footer>
+<script src="script.js"></script>
+<script>document.querySelectorAll('[data-cfg]').forEach(function(e){var v=window.S1_CONFIG;e.dataset.cfg.split('.').forEach(function(k){v=v&&v[k]});if(v)e.textContent=v});</script>
+</body>
+</html>

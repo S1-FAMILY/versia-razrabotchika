@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Оплата заказа | S1 CONTEST</title>
+    <meta name="theme-color" content="#02050a">
+    <meta name="description" content="S1 CONTEST 2027 — танцевальный контест и мастер-классы в Ставрополе, 23–24 января 2027.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23bcdff6' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M12 2v20M4 7l16 10M4 17L20 7'/%3E%3C/svg%3E">
+    <link rel="preload" as="image" href="img/ice-wide.jpg" media="(min-aspect-ratio: 1/1)">
+    <link rel="preload" as="image" href="img/ice-tall.jpg" media="(max-aspect-ratio: 1/1)">
+    <script>document.documentElement.classList.add('js')</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="orders.css">
+    <script src="config.js"></script>
+</head>
+<body>
+
+<!-- Фон: аврора, ледяная рамка, снегопад -->
+<div class="aurora" aria-hidden="true"></div>
+<div class="ice-frame" aria-hidden="true"><div class="ice-img"></div></div>
+<canvas id="snow-back" aria-hidden="true"></canvas>
+<canvas id="snow-front" aria-hidden="true"></canvas>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="iceText" x="-4%" y="-12%" width="108%" height="124%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1.7" result="b"/>
+      <feSpecularLighting in="b" surfaceScale="5" specularConstant=".6" specularExponent="26" lighting-color="#ffffff" result="s">
+        <feDistantLight azimuth="235" elevation="52"/>
+      </feSpecularLighting>
+      <feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/>
+      <feComposite in="SourceGraphic" in2="s2" operator="arithmetic" k1="0" k2="1" k3=".6" k4="0"/>
+    </filter>
+    <linearGradient id="snowGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2faff" stop-opacity=".96"/>
+      <stop offset=".16" stop-color="#c9e4f7" stop-opacity=".72"/>
+      <stop offset=".55" stop-color="#5b8fbb" stop-opacity=".26"/>
+      <stop offset="1" stop-color="#0a182a" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="iceHeart" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".5" stop-color="#b9d8ee"/>
+      <stop offset="1" stop-color="#6f9ec0"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<header>
+    <div class="container">
+        <div class="header-content">
+            <div class="logo">S1 CONTEST 2027</div>
+            <button class="mobile-menu-toggle" aria-label="Открыть меню">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav-links">
+                <a href="polozhenie.html">Положение</a>
+                <a href="index.html#about">О событии</a>
+                <a href="index.html#categories">Категории</a>
+                <a href="index.html#registration">Регистрация</a>
+                <a href="index.html#rules">Критерии</a>
+                <a href="index.html#masters">Мастер-классы</a>
+                <a href="order.html">Заказ</a>
+                <a href="index.html#volunteers">Волонтёры</a>
+                <a href="index.html#contacts">Контакты</a>
+            </nav>
+            <a class="dev-credit" href="https://t.me/se_va09" target="_blank" rel="noopener" title="Разработчик сайта"><span>Разработчик</span><b>Андреев Всеволод</b></a>
+        </div>
+    </div>
+</header>
+<div class="mobile-menu-overlay"></div>
+<section class="page-sec"><div class="container">
+  <h1 class="section-title">ОПЛАТА</h1>
+  <div class="pay-card" id="pay"><div class="spin" style="margin:20px auto"></div><p class="note">Загружаем заказ…</p></div>
+</div></section>
+<script src="qr.js"></script>
+<script>
+(function(){
+var C=window.S1_CONFIG,id=new URLSearchParams(location.search).get('id'),box=document.getElementById('pay'),t;
+var rub=function(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' ₽'};
+function qrSvg(text){var q=qrcode(0,'M');q.addData(text);q.make();return q.createSvgTag({cellSize:6,margin:0,scalable:true})}
+function draw(o){
+  var h='<h3>Заказ № '+o.num+'</h3><div class="amt">'+rub(o.amount)+'</div>';
+  if(o.status==='paid'){h+='<div class="st ok"><i class="fas fa-check-circle"></i> Оплата получена. Спасибо!</div><p class="note">Чек отправлен на вашу почту. Если что-то пойдёт не так — напишите нам: '+C.organizer.tg+' · '+C.organizer.phone+'</p>';box.innerHTML=h;return false}
+  if(o.status==='canceled'){h+='<div class="st" style="color:#ffb4b4">Платёж отменён или истёк срок оплаты.</div><a class="btn-link" href="order.html">Оформить заново</a>';box.innerHTML=h;return false}
+  if(o.qr){h+='<p class="note" style="margin-top:0">Отсканируйте QR-код в приложении своего банка (раздел «Оплата по QR / СБП»).</p><div class="qr-box">'+qrSvg(o.qr)+'</div><br><a class="btn-link" href="'+o.qr+'">Открыть в приложении банка</a><div class="st">Ожидаем оплату…</div>'}
+  else if(o.mode==='demo'){h+='<div class="st" style="color:#ffd9a0">Тестовый режим: платёжная система ещё не подключена, QR-код не создаётся.</div>'}
+  else h+='<div class="st">Ожидаем оплату…</div>';
+  box.innerHTML=h;return true}
+function load(){fetch((C.apiBase||'')+'/api/order/'+encodeURIComponent(id)).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(o){
+  if(o.method==='card'&&o.payUrl&&o.status==='pending'&&!sessionStorage['go'+id]){sessionStorage['go'+id]=1;box.innerHTML='<div class="spin" style="margin:20px auto"></div><p>Пожалуйста, подождите, идёт переход на страницу оплаты…</p>';location.href=o.payUrl;return}
+  if(draw(o))t=setTimeout(load,4000)}).catch(function(){box.innerHTML='<p class="note">Заказ не найден или сервер недоступен.</p><a class="btn-link" href="order.html">Вернуться к заказу</a>'})}
+if(!id)box.innerHTML='<p class="note">Не указан номер заказа.</p>';else load();
+})();
+</script>
+
+<footer>
+    <div class="drift" aria-hidden="true">
+        <svg class="d-back" viewBox="0 0 1440 160" preserveAspectRatio="none"><path d="M0 70 C84 50 168 33 240 50 C324 55 408 75 480 78 C564 68 648 21 720 33 C804 77 888 28 960 50 C1044 46 1128 66 1200 96 C1284 26 1368 41 1440 70 V160 H0 Z" fill="url(#snowGrad)"/></svg>
+        <svg class="d-front" viewBox="0 0 1440 160" preserveAspectRatio="none"><path d="M0 95 C84 80 168 59 240 92 C324 77 408 72 480 93 C564 78 648 53 720 76 C804 58 888 102 960 113 C1044 92 1128 45 1200 70 C1284 55 1368 60 1440 95 V160 H0 Z" fill="url(#snowGrad)"/></svg>
+    </div>
+    <div class="container">
+        <h3>S1 CONTEST 2027</h3>
+        <div class="social-links">
+            <a href="https://instagram.com/s1family_contest" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="https://t.me/s1_contest" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a>
+        </div>
+        <p class="copyright">Разработчик сайта: Андреев Всеволод (тг: <a href="https://t.me/se_va09" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">@se_va09</a>)</p>
+        <p class="copyright footnote-ig">Instagram принадлежит компании Meta, признанной экстремистской организацией и запрещённой на территории РФ.</p>
+        <p class="copyright">© 2027 S1 CONTEST — Ставрополь. Все права защищены. 23–24 января 2027</p>
+    </div>
+</footer>
+<script src="script.js"></script>
+<script>document.querySelectorAll('[data-cfg]').forEach(function(e){var v=window.S1_CONFIG;e.dataset.cfg.split('.').forEach(function(k){v=v&&v[k]});if(v)e.textContent=v});</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Публичная оферта | S1 CONTEST</title>
+    <meta name="theme-color" content="#02050a">
+    <meta name="description" content="S1 CONTEST 2027 — танцевальный контест и мастер-классы в Ставрополе, 23–24 января 2027.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23bcdff6' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M12 2v20M4 7l16 10M4 17L20 7'/%3E%3C/svg%3E">
+    <link rel="preload" as="image" href="img/ice-wide.jpg" media="(min-aspect-ratio: 1/1)">
+    <link rel="preload" as="image" href="img/ice-tall.jpg" media="(max-aspect-ratio: 1/1)">
+    <script>document.documentElement.classList.add('js')</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="orders.css">
+    <script src="config.js"></script>
+</head>
+<body>
+
+<!-- Фон: аврора, ледяная рамка, снегопад -->
+<div class="aurora" aria-hidden="true"></div>
+<div class="ice-frame" aria-hidden="true"><div class="ice-img"></div></div>
+<canvas id="snow-back" aria-hidden="true"></canvas>
+<canvas id="snow-front" aria-hidden="true"></canvas>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="iceText" x="-4%" y="-12%" width="108%" height="124%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1.7" result="b"/>
+      <feSpecularLighting in="b" surfaceScale="5" specularConstant=".6" specularExponent="26" lighting-color="#ffffff" result="s">
+        <feDistantLight azimuth="235" elevation="52"/>
+      </feSpecularLighting>
+      <feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/>
+      <feComposite in="SourceGraphic" in2="s2" operator="arithmetic" k1="0" k2="1" k3=".6" k4="0"/>
+    </filter>
+    <linearGradient id="snowGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2faff" stop-opacity=".96"/>
+      <stop offset=".16" stop-color="#c9e4f7" stop-opacity=".72"/>
+      <stop offset=".55" stop-color="#5b8fbb" stop-opacity=".26"/>
+      <stop offset="1" stop-color="#0a182a" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="iceHeart" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".5" stop-color="#b9d8ee"/>
+      <stop offset="1" stop-color="#6f9ec0"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<header>
+    <div class="container">
+        <div class="header-content">
+            <div class="logo">S1 CONTEST 2027</div>
+            <button class="mobile-menu-toggle" aria-label="Открыть меню">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav-links">
+                <a href="polozhenie.html">Положение</a>
+                <a href="index.html#about">О событии</a>
+                <a href="index.html#categories">Категории</a>
+                <a href="index.html#registration">Регистрация</a>
+                <a href="index.html#rules">Критерии</a>
+                <a href="index.html#masters">Мастер-классы</a>
+                <a href="order.html">Заказ</a>
+                <a href="index.html#volunteers">Волонтёры</a>
+                <a href="index.html#contacts">Контакты</a>
+            </nav>
+            <a class="dev-credit" href="https://t.me/se_va09" target="_blank" rel="noopener" title="Разработчик сайта"><span>Разработчик</span><b>Андреев Всеволод</b></a>
+        </div>
+    </div>
+</header>
+<div class="mobile-menu-overlay"></div>
+<section class="page-sec"><div class="container">
+  <h1 class="section-title">ПУБЛИЧНАЯ ОФЕРТА</h1>
+  <article class="doc-card">
+    <p class="meta">Редакция от 14 ноября 2026 г. · Договор оказания услуг по организации и проведению танцевального мероприятия S1 CONTEST</p>
+
+    <h2>1. Общие положения</h2>
+    <p>1.1. Настоящий документ является публичной офертой (ст. 435 и п. 2 ст. 437 Гражданского кодекса РФ) <span class="ph" data-cfg="organizer.name"></span>, ИНН <span class="ph" data-cfg="organizer.inn"></span>, ОГРН/ОГРНИП <span class="ph" data-cfg="organizer.ogrn"></span>, адрес: <span class="ph" data-cfg="organizer.address"></span> (далее — «Организатор»), и адресована любому физическому лицу (далее — «Заказчик»).</p>
+    <p>1.2. Акцептом оферты является оформление заказа на сайте и оплата заказа (нажатие кнопки «Оплатить» с последующей оплатой). С момента оплаты договор считается заключённым.</p>
+    <p>1.3. Мероприятие — танцевальный контест S1 CONTEST и сопутствующая программа, проводимые в г. Ставрополь <span data-cfg="event.dates"></span>. Место проведения и расписание публикуются на сайте и в Telegram-канале <span data-cfg="organizer.tg"></span>.</p>
+
+    <h2>2. Предмет договора</h2>
+    <p>2.1. Организатор предоставляет Заказчику следующие услуги в зависимости от оформленного заказа:</p>
+    <ul>
+      <li><b>VIP-билет</b> — право посещения мероприятия в качестве зрителя по VIP-категории (условия VIP-категории публикуются на сайте) и участие в розыгрыше мерча на условиях раздела 6;</li>
+      <li><b>Мастер-класс / Full pass</b> — участие в выбранных мастер-классах приглашённых хореографов. Состав, время и преподаватели указаны на сайте.</li>
+    </ul>
+    <p>2.2. Организатор вправе заменить преподавателя мастер-класса или изменить время проведения по уважительной причине, уведомив Заказчика через контакты, указанные в заказе.</p>
+
+    <h2>3. Стоимость и порядок оплаты</h2>
+    <p>3.1. Стоимость услуг указана на сайте и в оформляемом заказе. Цена фиксируется на момент оформления заказа. Организатор вправе проводить акции и временно изменять цены; изменение цены не распространяется на уже оплаченные заказы.</p>
+    <p>3.2. Оплата производится в рублях РФ: за VIP-билеты — банковской картой или через Систему быстрых платежей (СБП) по QR-коду; за мастер-классы — через СБП по QR-коду. Оплата проходит через платёжного провайдера; Организатор не получает и не хранит данные банковских карт.</p>
+    <p>3.3. Мастер-классы могут быть забронированы при 100% оплате либо при предоплате в размере, указанном в заказе. Остаток при предоплате вносится в срок, объявленный Организатором; при неоплате остатка бронь может быть аннулирована.</p>
+    <p>3.4. Кассовый чек направляется на адрес электронной почты, указанный в заказе. Заказчик несёт ответственность за корректность указанных данных.</p>
+
+    <h2>4. Получение услуги</h2>
+    <p>4.1. После оплаты Заказчик включается в списки Организатора по ФИО, указанным в заказе (для VIP-билетов — ФИО всех зрителей). На входе необходимо предъявить документ, удостоверяющий личность, или подтверждение заказа.</p>
+    <p>4.2. Билет и место на мастер-классе именные. Передача права посещения третьему лицу возможна только по согласованию с Организатором и до начала мероприятия.</p>
+
+    <h2>5. Возврат и отмена</h2>
+    <p>5.1. Если мероприятие или мастер-класс не состоялись по вине Организатора либо отменены, Организатор возвращает оплаченную сумму полностью в течение 10 рабочих дней тем же способом, которым была произведена оплата.</p>
+    <p>5.2. Если мероприятие перенесено, Заказчик вправе использовать билет на новую дату либо потребовать возврата оплаты.</p>
+    <p>5.3. Заказчик вправе отказаться от услуги до её оказания, уведомив Организатора на <span data-cfg="organizer.email"></span>. Организатор возвращает оплаченную сумму за вычетом фактически понесённых расходов (ст. 32 Закона РФ «О защите прав потребителей»). Организатор вправе предложить передать место другому лицу.</p>
+    <p>5.4. Требования о возврате рассматриваются в течение 10 дней с момента получения письменного обращения.</p>
+
+    <h2 id="raffle">6. Условия розыгрыша мерча</h2>
+    <p>6.1. Розыгрыш мерча S1 CONTEST проводится среди владельцев оплаченных VIP-билетов. Отдельная плата за участие в розыгрыше не взимается; призовой фонд формируется Организатором.</p>
+    <p>6.2. Количество призов и их состав: <span class="ph">[УКАЗАТЬ]</span>. Дата и способ определения победителей: <span class="ph">[УКАЗАТЬ: дата, прямой эфир / генератор случайных чисел]</span>.</p>
+    <p>6.3. Каждый VIP-билет — один шанс в розыгрыше. Победители объявляются на мероприятии и в Telegram-канале Организатора. Приз выдаётся при предъявлении документа, удостоверяющего личность, лично либо способом, согласованным с Организатором.</p>
+    <p>6.4. Организатор вправе исключить из розыгрыша билеты, оплата по которым была возвращена.</p>
+
+    <h2>7. Права и обязанности сторон</h2>
+    <p>7.1. Заказчик обязуется соблюдать правила посещения мероприятия и требования безопасности, не создавать угрозу для участников. При нарушении Организатор вправе удалить Заказчика с мероприятия без возврата оплаты.</p>
+    <p>7.2. Организатор вправе проводить фото- и видеосъёмку мероприятия и использовать материалы для освещения и продвижения контеста.</p>
+    <p>7.3. Организатор не несёт ответственности за невозможность оказания услуг по обстоятельствам непреодолимой силы.</p>
+    <p>7.4. Заказчик, не достигший 18 лет, оформляет заказ с согласия законного представителя.</p>
+
+    <h2>8. Персональные данные</h2>
+    <p>Обработка персональных данных осуществляется в соответствии с <a href="privacy.html" style="color:var(--ice-2)">политикой конфиденциальности</a>.</p>
+
+    <h2>9. Заключительные положения</h2>
+    <p>9.1. Договор регулируется законодательством РФ. Споры разрешаются путём переговоров, при недостижении согласия — в суде по месту нахождения Организатора либо по месту жительства Заказчика в случаях, предусмотренных законом.</p>
+    <p>9.2. Организатор вправе изменять оферту; новая редакция действует с момента публикации на сайте и не применяется к уже оплаченным заказам.</p>
+
+    <h2>10. Реквизиты и контакты Организатора</h2>
+    <p><span class="ph" data-cfg="organizer.name"></span><br>ИНН <span class="ph" data-cfg="organizer.inn"></span> · ОГРН/ОГРНИП <span class="ph" data-cfg="organizer.ogrn"></span><br><span class="ph" data-cfg="organizer.address"></span><br>E-mail: <span data-cfg="organizer.email"></span> · Телефон: <span data-cfg="organizer.phone"></span> · Telegram: <span data-cfg="organizer.tg"></span></p>
+  </article>
+</div></section>
+
+<footer>
+    <div class="drift" aria-hidden="true">
+        <svg class="d-back" viewBox="0 0 1440 160" preserveAspectRatio="none"><path d="M0 70 C84 50 168 33 240 50 C324 55 408 75 480 78 C564 68 648 21 720 33 C804 77 888 28 960 50 C1044 46 1128 66 1200 96 C1284 26 1368 41 1440 70 V160 H0 Z" fill="url(#snowGrad)"/></svg>
+        <svg class="d-front" viewBox="0 0 1440 160" preserveAspectRatio="none"><path d="M0 95 C84 80 168 59 240 92 C324 77 408 72 480 93 C564 78 648 53 720 76 C804 58 888 102 960 113 C1044 92 1128 45 1200 70 C1284 55 1368 60 1440 95 V160 H0 Z" fill="url(#snowGrad)"/></svg>
+    </div>
+    <div class="container">
+        <h3>S1 CONTEST 2027</h3>
+        <div class="social-links">
+            <a href="https://instagram.com/s1family_contest" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="https://t.me/s1_contest" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a>
+        </div>
+        <p class="copyright">Разработчик сайта: Андреев Всеволод (тг: <a href="https://t.me/se_va09" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">@se_va09</a>)</p>
+        <p class="copyright footnote-ig">Instagram принадлежит компании Meta, признанной экстремистской организацией и запрещённой на территории РФ.</p>
+        <p class="copyright">© 2027 S1 CONTEST — Ставрополь. Все права защищены. 23–24 января 2027</p>
+    </div>
+</footer>
+<script src="script.js"></script>
+<script>document.querySelectorAll('[data-cfg]').forEach(function(e){var v=window.S1_CONFIG;e.dataset.cfg.split('.').forEach(function(k){v=v&&v[k]});if(v)e.textContent=v});</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Заказ — VIP-билет и мастер-классы | S1 CONTEST</title>
+    <meta name="theme-color" content="#02050a">
+    <meta name="description" content="S1 CONTEST 2027 — танцевальный контест и мастер-классы в Ставрополе, 23–24 января 2027.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23bcdff6' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M12 2v20M4 7l16 10M4 17L20 7'/%3E%3C/svg%3E">
+    <link rel="preload" as="image" href="img/ice-wide.jpg" media="(min-aspect-ratio: 1/1)">
+    <link rel="preload" as="image" href="img/ice-tall.jpg" media="(max-aspect-ratio: 1/1)">
+    <script>document.documentElement.classList.add('js')</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="orders.css">
+    <script src="config.js"></script>
+</head>
+<body>
+
+<!-- Фон: аврора, ледяная рамка, снегопад -->
+<div class="aurora" aria-hidden="true"></div>
+<div class="ice-frame" aria-hidden="true"><div class="ice-img"></div></div>
+<canvas id="snow-back" aria-hidden="true"></canvas>
+<canvas id="snow-front" aria-hidden="true"></canvas>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="iceText" x="-4%" y="-12%" width="108%" height="124%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1.7" result="b"/>
+      <feSpecularLighting in="b" surfaceScale="5" specularConstant=".6" specularExponent="26" lighting-color="#ffffff" result="s">
+        <feDistantLight azimuth="235" elevation="52"/>
+      </feSpecularLighting>
+      <feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/>
+      <feComposite in="SourceGraphic" in2="s2" operator="arithmetic" k1="0" k2="1" k3=".6" k4="0"/>
+    </filter>
+    <linearGradient id="snowGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2faff" stop-opacity=".96"/>
+      <stop offset=".16" stop-color="#c9e4f7" stop-opacity=".72"/>
+      <stop offset=".55" stop-color="#5b8fbb" stop-opacity=".26"/>
+      <stop offset="1" stop-color="#0a182a" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="iceHeart" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".5" stop-color="#b9d8ee"/>
+      <stop offset="1" stop-color="#6f9ec0"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<header>
+    <div class="container">
+        <div class="header-content">
+            <div class="logo">S1 CONTEST 2027</div>
+            <button class="mobile-menu-toggle" aria-label="Открыть меню">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav-links">
+                <a href="polozhenie.html">Положение</a>
+                <a href="index.html#about">О событии</a>
+                <a href="index.html#categories">Категории</a>
+                <a href="index.html#registration">Регистрация</a>
+                <a href="index.html#rules">Критерии</a>
+                <a href="index.html#masters">Мастер-классы</a>
+                <a href="order.html">Заказ</a>
+                <a href="index.html#volunteers">Волонтёры</a>
+                <a href="index.html#contacts">Контакты</a>
+            </nav>
+            <a class="dev-credit" href="https://t.me/se_va09" target="_blank" rel="noopener" title="Разработчик сайта"><span>Разработчик</span><b>Андреев Всеволод</b></a>
+        </div>
+    </div>
+</header>
+<div class="mobile-menu-overlay"></div>
+<section class="page-sec"><div class="container">
+  <h1 class="section-title">ЗАКАЗ</h1>
+  <div class="tabs" role="tablist"><button type="button" data-tab="vip" class="on">VIP-билет</button><button type="button" data-tab="master">Мастер-классы</button></div>
+  <div class="order-grid">
+    <div>
+      <form id="form-vip" class="form-card" novalidate autocomplete="on" onsubmit="return false">
+        <h3>VIP-билет · розыгрыш мерча</h3>
+        <div class="group-t" style="margin-top:0">Количество билетов</div>
+        <div class="qty"><button type="button" data-q="-1" aria-label="Меньше">−</button><input id="qty" value="1" readonly aria-label="Количество"><button type="button" data-q="1" aria-label="Больше">+</button></div>
+        <div class="group-t">Данные покупателя</div>
+        <label class="fld"><span>ФИО</span><input name="fio" autocomplete="name" placeholder="Иванов Иван Иванович"><b class="em">Укажите фамилию и имя</b></label>
+        <label class="fld"><span>Почта (для чека)</span><input name="email" type="email" autocomplete="email" placeholder="name@mail.ru"><b class="em">Введите корректную почту — на неё придёт чек</b></label>
+        <label class="fld"><span>Телефон</span><input name="phone" type="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__"><b class="em">Введите номер телефона</b></label>
+        <label class="fld"><span>Ник в Telegram или ссылка</span><input name="tg" placeholder="@nickname или https://t.me/nickname"><b class="em">Укажите ник или ссылку на Telegram</b></label>
+        <div id="guests-wrap" hidden><label class="fld"><span>ФИО всех зрителей</span><textarea name="guests" placeholder="По одному ФИО в строке"></textarea><small>Если приобретаете несколько билетов, укажите ФИО всех зрителей — по одному в каждой строке.</small><b class="em">Укажите ФИО каждого зрителя — по одному в строке</b></label></div>
+        <div class="group-t">Способ оплаты</div>
+        <label class="opt sel"><input type="radio" name="method" value="card" checked><div><b>Банковская карта</b><small>Откроется защищённая страница оплаты</small></div><em><i class="far fa-credit-card"></i></em></label>
+        <label class="opt"><input type="radio" name="method" value="sbp"><div><b>СБП — по QR-коду</b><small>Оплата в приложении вашего банка</small></div><em><i class="fas fa-qrcode"></i></em></label>
+        <p class="consent">Нажимая кнопку «Оплатить», вы соглашаетесь с <a href="privacy.html" target="_blank" rel="noopener">политикой конфиденциальности</a> и подтверждаете, что ознакомились с <a href="offer.html" target="_blank" rel="noopener">публичной офертой</a>.</p>
+        <button type="button" class="btn-pay" id="pay-vip">Оплатить</button>
+      </form>
+
+      <form id="form-master" class="form-card" novalidate hidden onsubmit="return false">
+        <h3>Мастер-классы · 23 января</h3>
+        <div class="group-t" style="margin-top:0">Выберите мастер-класс</div>
+        <div id="m-list"></div>
+        <p class="em" id="m-err" style="display:none;color:#ffb4b4;font-size:.85rem">Выберите хотя бы один мастер-класс</p>
+        <p class="note" style="margin-top:0">Выбрав оба класса, вы получаете Full pass по выгодной цене.</p>
+        <div class="group-t">Репост</div>
+        <label class="opt sel"><input type="radio" name="rp" value="0" checked><div><b>Без репоста</b></div></label>
+        <label class="opt"><input type="radio" name="rp" value="1"><div><b>С репостом</b><small>Цена ниже при репосте анонса контеста</small></div></label>
+        <div id="rp-link"><label class="fld"><span>Ссылка на репост</span><input name="repost" placeholder="https://…"><b class="em">Вставьте ссылку на репост</b></label></div>
+        <div class="group-t">Оплата</div>
+        <label class="opt sel"><input type="radio" name="pp" value="100" checked><div><b>100% оплата</b></div></label>
+        <label class="opt"><input type="radio" name="pp" value="50"><div><b>Предоплата 50%</b><small>Место бронируется после предоплаты</small></div></label>
+        <div class="group-t">Данные участника</div>
+        <label class="fld"><span>ФИО</span><input name="fio" autocomplete="name"><b class="em">Укажите фамилию и имя</b></label>
+        <label class="fld"><span>Почта (для чека)</span><input name="email" type="email" autocomplete="email"><b class="em">Введите корректную почту</b></label>
+        <label class="fld"><span>Телефон</span><input name="phone" type="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__"><b class="em">Введите номер телефона</b></label>
+        <label class="fld"><span>Ник в Telegram или ссылка</span><input name="tg" placeholder="@nickname"><b class="em">Укажите ник или ссылку</b></label>
+        <div class="group-t">Способ оплаты</div>
+        <label class="opt sel"><input type="radio" checked disabled><div><b>СБП — по QR-коду</b><small>Для мастер-классов оплата принимается по QR-коду СБП</small></div><em><i class="fas fa-qrcode"></i></em></label>
+        <p class="consent">Нажимая кнопку «Оплатить», вы соглашаетесь с <a href="privacy.html" target="_blank" rel="noopener">политикой конфиденциальности</a> и подтверждаете, что ознакомились с <a href="offer.html" target="_blank" rel="noopener">публичной офертой</a>.</p>
+        <button type="button" class="btn-pay" id="pay-master">Оплатить</button>
+      </form>
+    </div>
+    <aside class="side-card" id="sum"></aside>
+  </div>
+</div></section>
+<div class="overlay" id="ov" role="alertdialog" aria-live="polite"></div>
+<script>
+(function(){var C=window.S1_CONFIG,h='';C.masters.list.forEach(function(m){h+='<label class="opt"><input type="checkbox" name="m" value="'+m.id+'"><div><b>'+m.name+'</b><small>'+m.style+' · '+m.time+'</small></div><em>'+C.masters.onePrice.noRepost.toLocaleString('ru-RU')+' ₽</em></label>'});document.getElementById('m-list').innerHTML=h})();
+</script>
+<script src="orders.js"></script>
+
+<footer>
+    <div class="drift" aria-hidden="true">
+        <svg class="d-back" viewBox="0 0 1440 160" preserveAspectRatio="none"><path d="M0 70 C84 50 168 33 240 50 C324 55 408 75 480 78 C564 68 648 21 720 33 C804 77 888 28 960 50 C1044 46 1128 66 1200 96 C1284 26 1368 41 1440 70 V160 H0 Z" fill="url(#snowGrad)"/></svg>
+        <svg class="d-front" viewBox="0 0 1440 160" preserveAspectRatio="none"><path d="M0 95 C84 80 168 59 240 92 C324 77 408 72 480 93 C564 78 648 53 720 76 C804 58 888 102 960 113 C1044 92 1128 45 1200 70 C1284 55 1368 60 1440 95 V160 H0 Z" fill="url(#snowGrad)"/></svg>
+    </div>
+    <div class="container">
+        <h3>S1 CONTEST 2027</h3>
+        <div class="social-links">
+            <a href="https://instagram.com/s1family_contest" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="https://t.me/s1_contest" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a>
+        </div>
+        <p class="copyright">Разработчик сайта: Андреев Всеволод (тг: <a href="https://t.me/se_va09" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">@se_va09</a>)</p>
+        <p class="copyright footnote-ig">Instagram принадлежит компании Meta, признанной экстремистской организацией и запрещённой на территории РФ.</p>
+        <p class="copyright">© 2027 S1 CONTEST — Ставрополь. Все права защищены. 23–24 января 2027</p>
+    </div>
+</footer>
+<script src="script.js"></script>
+<script>document.querySelectorAll('[data-cfg]').forEach(function(e){var v=window.S1_CONFIG;e.dataset.cfg.split('.').forEach(function(k){v=v&&v[k]});if(v)e.textContent=v});</script>
+</body>
+</html>
