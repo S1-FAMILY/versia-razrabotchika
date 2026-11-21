@@ -61,8 +61,8 @@
                 <a href="#registration">Регистрация</a>
                 <a href="#rules">Критерии</a>
                 <a href="#masters">Мастер-классы</a>
+                <a href="#judges">Судьи</a>
                 <a href="order.html">Заказ</a>
-                <a href="#volunteers">Волонтёры</a>
                 <a href="#contacts">Контакты</a>
             </nav>
             <a class="dev-credit" href="https://t.me/se_va09" target="_blank" rel="noopener" title="Разработчик сайта"><span>Разработчик</span><b>Андреев Всеволод</b></a>
@@ -98,7 +98,7 @@
         <div class="about-content">
             <div class="about-text">
                 <p>Приглашаем Вас принять участие в танцевальном мероприятии S1 CONTEST. Это уникальная возможность продемонстрировать свой талант и встретиться с единомышленниками. Присоединяйся к танцевальному движению!</p>
-                <div class="info-card"><h3>ДАТЫ</h3><p>20 декабря 2026 — МАСТЕР-КЛАССЫ</p><p>23–24 января 2027 — CONTEST</p></div>
+                <div class="info-card"><h3>ДАТЫ</h3><p>23 января 2027 — МАСТЕР-КЛАССЫ</p><p>24 января 2027 — CONTEST</p></div>
                 <div class="info-card"><h3>МЕСТО</h3><p>Мастер-классы: г. Ставрополь, ул. Перспективная, 1 Г</p><p>Контест: г. Ставрополь, ул. Кулакова, 2, корпус 9</p></div>
                 <div class="info-card"><h3>СЦЕНА</h3><p>Покрытие — профессиональный линолеум</p><p class="warning">Запрещён реквизит, который загрязняет, повреждает или намачивает поверхность</p></div>
             </div>
@@ -125,8 +125,6 @@
     </div>
 </section>
 
-<div class="promo-band" id="promo" hidden style="margin-top:30px"><b id="promo-p">−25%</b> · <b>Новогодняя скидка на VIP-билеты</b> — осталось <b id="promo-t"></b> <a href="order.html#vip">Купить VIP-билет</a></div>
-
 <section class="registration" id="registration">
     <div class="container">
         <h2 class="section-title">РЕГИСТРАЦИЯ И СТОИМОСТЬ</h2>
@@ -137,9 +135,9 @@
 </table></div><p class="note" style="margin-top:12px">Участие в нескольких номинациях или разные номера в одной номинации — взнос оплачивается за каждое выступление.</p></div>
         <div class="registration-info"><div class="info-box"><h3>ОПЛАТА</h3><p>Взнос необходимо оплатить до 17 января 2027 включительно. Возврат — только при отмене мероприятия; при форс-мажоре напишите организаторам.</p></div><div class="info-box"><h3>МУЗЫКА</h3><p>Формат MP3 (и копия на USB-флешке). Срок — до 14 декабря включительно, на s1contest.music@yandex.ru. Тема письма: Ф.И./ДУЭТ/КОМАНДА _ ФИ руководителя/хореографа _ контактный тел.</p></div></div>
         <div class="registration-grid">
-            <div class="reg-card"><div class="card-content"><h3>SOLO</h3><div class="price-main">2 000 / 2 400 ₽</div><p>до 31.12 / с 01.01</p></div><a href="https://docs.google.com/forms/d/1V3Zy7zS764VDYzDdfJABsnXPuL4GxMQ-5yYGW8petq8/edit" class="btn" target="_blank">ЗАЯВКА SOLO</a></div>
-            <div class="reg-card"><div class="card-content"><h3>DUET</h3><div class="price-main">1 800 / 2 100 ₽</div><p>до 31.12 / с 01.01 · с участника</p></div><a href="https://docs.google.com/forms/d/e/1FAIpQLSfK3BLvG2kEUVoic9XDj6xqqNQbLlYinyiDYOvpTfka6N87LA/viewform?usp=publish-editor" class="btn" target="_blank">ЗАЯВКА DUET</a></div>
-            <div class="reg-card"><div class="card-content"><h3>CREW</h3><div class="price-main">1 700 / 1 900 ₽</div><p>до 31.12 / с 01.01 · с человека</p></div><a href="https://docs.google.com/forms/d/e/1FAIpQLSc_ZhA-eDv8bmaqMBQp81iZ2MbyNEunoEZSzj0PSIDN6I_oYQ/viewform?usp=publish-editor" class="btn" target="_blank">ЗАЯВКА CREW</a></div>
+            <div class="reg-card"><div class="card-content"><h3>SOLO</h3><div class="price-main">2 000 / 2 400 ₽</div><p>до 31.12 / с 01.01</p></div><a href="order.html?n=solo#entry" class="btn">ПОДАТЬ ЗАЯВКУ</a></div>
+            <div class="reg-card"><div class="card-content"><h3>DUET</h3><div class="price-main">1 800 / 2 100 ₽</div><p>до 31.12 / с 01.01 · с участника</p></div><a href="order.html?n=duet#entry" class="btn">ПОДАТЬ ЗАЯВКУ</a></div>
+            <div class="reg-card"><div class="card-content"><h3>CREW</h3><div class="price-main">1 700 / 1 900 ₽</div><p>до 31.12 / с 01.01 · с человека</p></div><a href="order.html?n=crew#entry" class="btn">ПОДАТЬ ЗАЯВКУ</a></div>
         </div>
         <div class="ticket-card">
             <h3>ЗРИТЕЛЬСКИЕ БИЛЕТЫ</h3>
@@ -147,17 +145,9 @@
                 <div class="ticket-price-item"><span class="ticket-price">700 ₽</span><span class="ticket-label">Предпродажа</span></div>
                 <div class="ticket-price-item"><span class="ticket-price">1 000 ₽</span><span class="ticket-label">В день соревнований (24 января)</span></div>
             </div>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLScZxvj0MYnahHa0y36I2aHw2Qiq2rdI_L55JJMGK9VO98lXQw/viewform?usp=dialog" class="btn" target="_blank">КУПИТЬ БИЛЕТ</a>
+            <a href="order.html#ticket" class="btn">КУПИТЬ БИЛЕТ</a>
         </div>
-        <div class="ticket-card vip-card">
-            <h3>VIP-БИЛЕТ · РОЗЫГРЫШ МЕРЧА</h3>
-            <p class="vip-sub">Каждый VIP-билет участвует в розыгрыше фирменного мерча S1 CONTEST. Оплата банковской картой или по QR-коду СБП.</p>
-            <div class="ticket-prices">
-                <div class="ticket-price-item"><span class="ticket-price"><s data-vip-old hidden></s><span data-vip-price></span></span><span class="ticket-label">VIP-билет</span></div>
             </div>
-            <a href="order.html#vip" class="btn">ЗАКАЗАТЬ VIP-БИЛЕТ</a>
-        </div>
-    </div>
 </section>
 
 <section class="rules" id="rules">
@@ -171,10 +161,10 @@
 <!-- МАСТЕР-КЛАССЫ -->
 <section class="masters" id="masters">
     <div class="container">
-        <h2 class="section-title">МАСТЕР-КЛАССЫ | 20 ДЕКАБРЯ 2026</h2>
+        <h2 class="section-title">МАСТЕР-КЛАССЫ | 23 ЯНВАРЯ 2027</h2>
         <div class="masters-intro">
             <i class="fas fa-star"></i>
-            20 декабря перед контестом пройдут мастер-классы от приглашённых танцоров! Место: г. Ставрополь, ул. Перспективная, 1 Г.
+            23 января, в первый день, пройдут мастер-классы от приглашённых танцоров! Место: г. Ставрополь, ул. Перспективная, 1 Г.
         </div>
         <div class="masters-grid">
             <div class="master-card">
@@ -221,20 +211,27 @@
     </div>
 </section>
 
-<section class="poll-sec" id="poll">
+<section class="judges" id="judges">
     <div class="container">
-        <h2 class="section-title">ОПРОС</h2>
-        <div class="poll-card" id="poll-box"></div>
-    </div>
-</section>
-
-<section class="vol-sec" id="volunteers">
-    <div class="container">
-        <h2 class="section-title">ВОЛОНТЁРЫ</h2>
-        <div class="ticket-card vol-card">
-            <h3>ПОМОГИТЕ ПРОВЕСТИ S1 CONTEST</h3>
-            <p class="vip-sub" style="color:var(--text);max-width:640px;margin:0 auto 18px;line-height:1.6">Ищем волонтёров на регистрацию, в зал и на сцену. За помощь мы начислим волонтёрские часы. Заявку можно подать через Добро.рф — или заполнить короткую анкету у нас.</p>
-            <a href="volunteers.html" class="btn">СТАТЬ ВОЛОНТЁРОМ</a>
+        <h2 class="section-title">СУДЬИ</h2>
+        <div class="masters-intro"><i class="fas fa-star"></i> Выступления участников оценивает жюри из четырёх судей. Имена и регалии мы объявим совсем скоро!</div>
+        <div class="judges-grid">
+            <div class="judge-card">
+                <div class="master-img ph"><svg viewBox="0 0 64 64" fill="none" stroke="#bfe0fb" stroke-width="2.4" stroke-linecap="round"><circle cx="32" cy="24" r="11"/><path d="M10 58c2-14 11-21 22-21s20 7 22 21"/></svg></div>
+                <div class="master-info"><h3>СУДЬЯ 1</h3><p>Информация скоро появится</p></div>
+            </div>
+            <div class="judge-card">
+                <div class="master-img ph"><svg viewBox="0 0 64 64" fill="none" stroke="#bfe0fb" stroke-width="2.4" stroke-linecap="round"><circle cx="32" cy="24" r="11"/><path d="M10 58c2-14 11-21 22-21s20 7 22 21"/></svg></div>
+                <div class="master-info"><h3>СУДЬЯ 2</h3><p>Информация скоро появится</p></div>
+            </div>
+            <div class="judge-card">
+                <div class="master-img ph"><svg viewBox="0 0 64 64" fill="none" stroke="#bfe0fb" stroke-width="2.4" stroke-linecap="round"><circle cx="32" cy="24" r="11"/><path d="M10 58c2-14 11-21 22-21s20 7 22 21"/></svg></div>
+                <div class="master-info"><h3>СУДЬЯ 3</h3><p>Информация скоро появится</p></div>
+            </div>
+            <div class="judge-card">
+                <div class="master-img ph"><svg viewBox="0 0 64 64" fill="none" stroke="#bfe0fb" stroke-width="2.4" stroke-linecap="round"><circle cx="32" cy="24" r="11"/><path d="M10 58c2-14 11-21 22-21s20 7 22 21"/></svg></div>
+                <div class="master-info"><h3>СУДЬЯ 4</h3><p>Информация скоро появится</p></div>
+            </div>
         </div>
     </div>
 </section>
@@ -247,7 +244,7 @@
             <a href="tel:+79624542221" class="contact-item"><i class="fas fa-phone-alt"></i><h3>ТЕЛЕФОН</h3><p>+7 (962) 454-22-21</p></a>
             <a href="mailto:s1contest.stav@gmail.com" class="contact-item"><i class="fas fa-envelope"></i><h3>E-MAIL</h3><p>s1contest.stav@gmail.com</p></a>
             <a href="mailto:s1contest.music@yandex.ru" class="contact-item"><i class="fas fa-music"></i><h3>ПОЧТА ДЛЯ МУЗЫКИ</h3><p>s1contest.music@yandex.ru</p></a>
-            <a href="https://www.instagram.com/s1family_contest" target="_blank" class="contact-item"><i class="fab fa-instagram"></i><h3>НЕЛЬЗЯГРАММ*</h3><p>s1family_contest</p></a>
+            <a href="https://www.instagram.com/s1family_contest" target="_blank" class="contact-item"><i class="fab fa-instagram"></i><h3>ИНСТАГРАМ*</h3><p>s1family_contest</p></a>
         </div>
     </div>
 </section>
@@ -263,6 +260,7 @@
             <a href="https://instagram.com/s1family_contest" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
             <a href="https://t.me/s1_contest" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a>
         </div>
+        <p class="copyright footer-docs"><a href="privacy.html">Политика конфиденциальности</a><a href="offer.html">Публичная оферта</a></p>
         <p class="copyright">Разработчик сайта: Андреев Всеволод (тг: <a href="https://t.me/se_va09" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">@se_va09</a>)</p>
         <p class="copyright footnote-ig">* Instagram принадлежит компании Meta, признанной экстремистской организацией и запрещённой на территории РФ.</p>
         <p class="copyright">© 2027 S1 CONTEST — Ставрополь. Все права защищены. 23–24 января 2027</p>
@@ -270,7 +268,5 @@
 </footer>
 
 <script src="script.js"></script>
-<script src="promo.js"></script>
-<script src="poll.js"></script>
 </body>
 </html>

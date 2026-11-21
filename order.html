@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Заказ — VIP-билет и мастер-классы | S1 CONTEST</title>
+    <title>Заявки и билеты — VIP-билет и мастер-классы | S1 CONTEST</title>
     <meta name="theme-color" content="#02050a">
     <meta name="description" content="S1 CONTEST 2027 — танцевальный контест и мастер-классы в Ставрополе, 23–24 января 2027.">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23bcdff6' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M12 2v20M4 7l16 10M4 17L20 7'/%3E%3C/svg%3E">
@@ -61,9 +61,9 @@
                 <a href="index.html#registration">Регистрация</a>
                 <a href="index.html#rules">Критерии</a>
                 <a href="index.html#masters">Мастер-классы</a>
+                <a href="index.html#judges">Судьи</a>
                 <a href="order.html">Заказ</a>
-                <a href="index.html#volunteers">Волонтёры</a>
-                <a href="index.html#contacts">Контакты</a>
+                                <a href="index.html#contacts">Контакты</a>
             </nav>
             <a class="dev-credit" href="https://t.me/se_va09" target="_blank" rel="noopener" title="Разработчик сайта"><span>Разработчик</span><b>Андреев Всеволод</b></a>
         </div>
@@ -71,58 +71,78 @@
 </header>
 <div class="mobile-menu-overlay"></div>
 <section class="page-sec"><div class="container">
-  <h1 class="section-title">ЗАКАЗ</h1>
-  <div class="tabs" role="tablist"><button type="button" data-tab="vip" class="on">VIP-билет</button><button type="button" data-tab="master">Мастер-классы</button></div>
+  <h1 class="section-title">ЗАЯВКИ И БИЛЕТЫ</h1>
+  <div class="tabs" role="tablist"><button type="button" data-tab="entry" class="on">Заявка на участие</button><button type="button" data-tab="master">Мастер-классы</button><button type="button" data-tab="ticket">Зрительский билет</button></div>
   <div class="order-grid">
     <div>
-      <form id="form-vip" class="form-card" novalidate autocomplete="on" onsubmit="return false">
-        <h3>VIP-билет · розыгрыш мерча</h3>
+      <!-- ===== ЗАЯВКА НА УЧАСТИЕ ===== -->
+      <form id="form-entry" class="form-card" novalidate autocomplete="on" onsubmit="return false">
+        <h3>Заявка на участие в контесте · 24 января</h3>
+        <div class="row2">
+          <label class="fld"><span>Направление</span><select name="dir"><option value="show">SHOW</option><option value="lady">LADY'S (от 16 лет)</option></select></label>
+          <label class="fld"><span>Номинация</span><select name="ntype"><option value="solo">SOLO</option><option value="duet">DUET</option><option value="crew">CREW</option></select></label>
+        </div>
+        <div class="row2">
+          <label class="fld" id="w-age"><span>Возрастная категория</span><select name="age"><option value="kids">Kids — до 12 лет включительно</option><option value="juniors">Juniors — 13–17 лет включительно</option><option value="adults">Adults — от 18 лет включительно</option></select></label>
+          <label class="fld" id="w-level"><span>Уровень</span><select name="level"><option value="beginners">Beginners — до 2 лет занятий</option><option value="pro">Pro — более 2–3 лет занятий</option></select></label>
+        </div>
+        <div class="group-t">Участники</div>
+        <label class="fld" id="w-team"><span id="l-team">Название команды</span><input name="team" placeholder="Название"><b class="em">Укажите название</b></label>
+        <label class="fld" id="w-count"><span>Количество участников (от 5)</span><input name="count" type="number" min="5" max="60" value="5"><b class="em">В команде должно быть не менее 5 участников</b></label>
+        <label class="fld"><span id="l-members">ФИО участника</span><textarea name="members" placeholder="Иванов Иван Иванович" id="t-members"></textarea><small id="s-members">Для команды — по одному ФИО в строке.</small><b class="em" id="e-members">Укажите ФИО участников — по одному в строке</b></label>
+        <label class="fld"><span>ФИО руководителя / хореографа</span><input name="coach" placeholder="Фамилия Имя"><b class="em">Укажите руководителя или хореографа</b></label>
+        <label class="fld"><span>Название композиции (необязательно)</span><input name="track" placeholder="Исполнитель — трек"><small>Музыку в формате MP3 нужно отправить до 14 декабря включительно на s1contest.music@yandex.ru.</small></label>
+        <div class="group-t">Контактное лицо</div>
+        <label class="fld"><span>ФИО</span><input name="fio" autocomplete="name" placeholder="Иванов Иван Иванович"><b class="em">Укажите фамилию и имя</b></label>
+        <label class="fld"><span>Почта</span><input name="email" type="email" autocomplete="email" placeholder="name@mail.ru"><b class="em">Введите корректную почту</b></label>
+        <label class="fld"><span>Телефон</span><input name="phone" type="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__"><b class="em">Введите номер телефона</b></label>
+        <label class="fld"><span>Ник в Telegram или ссылка</span><input name="tg" placeholder="@nickname или https://t.me/nickname"><b class="em">Укажите ник или ссылку на Telegram</b></label>
+        <p class="consent">Нажимая кнопку «Подать заявку», вы соглашаетесь с <a href="privacy.html" target="_blank" rel="noopener">политикой конфиденциальности</a> и подтверждаете, что ознакомились с <a href="offer.html" target="_blank" rel="noopener">публичной офертой</a> и <a href="polozhenie.html" target="_blank" rel="noopener">Положением</a>.</p>
+        <button type="button" class="btn-pay" id="go-entry">Подать заявку</button>
+      </form>
+
+      <!-- ===== МАСТЕР-КЛАССЫ ===== -->
+      <form id="form-master" class="form-card" novalidate hidden autocomplete="on" onsubmit="return false">
+        <h3>Мастер-классы · 23 января 2027</h3>
+        <div class="group-t" style="margin-top:0">Выберите мастер-класс</div>
+        <div id="m-list"></div>
+        <p class="em" id="m-err" style="display:none;color:#ffb4b4;font-size:.85rem">Выберите хотя бы один мастер-класс</p>
+        <p class="note" style="margin-top:0">Выберите один класс или оба — при выборе обоих действует цена Full pass.</p>
+        <div class="group-t">Репост</div>
+        <label class="opt sel"><input type="radio" name="rp" value="0" checked><div><b>Без репоста</b></div></label>
+        <label class="opt"><input type="radio" name="rp" value="1"><div><b>С репостом</b><small>Цена ниже при репосте анонса контеста</small></div></label>
+        <div id="rp-link" hidden><label class="fld"><span>Ссылка на репост</span><input name="repost" placeholder="https://…"><b class="em">Вставьте ссылку на репост</b></label></div>
+        <div class="group-t">Бронирование места</div>
+        <label class="opt sel"><input type="radio" name="pp" value="100" checked><div><b>100% оплата</b></div></label>
+        <label class="opt"><input type="radio" name="pp" value="50"><div><b>Предоплата 50%</b><small>Остаток — не позднее 5 декабря</small></div></label>
+        <div class="group-t">Данные участника</div>
+        <label class="fld"><span>ФИО</span><input name="fio" autocomplete="name"><b class="em">Укажите фамилию и имя</b></label>
+        <label class="fld"><span>Почта</span><input name="email" type="email" autocomplete="email"><b class="em">Введите корректную почту</b></label>
+        <label class="fld"><span>Телефон</span><input name="phone" type="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__"><b class="em">Введите номер телефона</b></label>
+        <label class="fld"><span>Ник в Telegram или ссылка</span><input name="tg" placeholder="@nickname"><b class="em">Укажите ник или ссылку</b></label>
+        <p class="consent">Нажимая кнопку «Подать заявку», вы соглашаетесь с <a href="privacy.html" target="_blank" rel="noopener">политикой конфиденциальности</a> и подтверждаете, что ознакомились с <a href="offer.html" target="_blank" rel="noopener">публичной офертой</a>.</p>
+        <button type="button" class="btn-pay" id="go-master">Подать заявку</button>
+      </form>
+
+      <!-- ===== ЗРИТЕЛЬСКИЙ БИЛЕТ ===== -->
+      <form id="form-ticket" class="form-card" novalidate hidden autocomplete="on" onsubmit="return false">
+        <h3>Зрительский билет · 24 января</h3>
         <div class="group-t" style="margin-top:0">Количество билетов</div>
         <div class="qty"><button type="button" data-q="-1" aria-label="Меньше">−</button><input id="qty" value="1" readonly aria-label="Количество"><button type="button" data-q="1" aria-label="Больше">+</button></div>
         <div class="group-t">Данные покупателя</div>
         <label class="fld"><span>ФИО</span><input name="fio" autocomplete="name" placeholder="Иванов Иван Иванович"><b class="em">Укажите фамилию и имя</b></label>
-        <label class="fld"><span>Почта (для чека)</span><input name="email" type="email" autocomplete="email" placeholder="name@mail.ru"><b class="em">Введите корректную почту — на неё придёт чек</b></label>
+        <label class="fld"><span>Почта</span><input name="email" type="email" autocomplete="email" placeholder="name@mail.ru"><b class="em">Введите корректную почту</b></label>
         <label class="fld"><span>Телефон</span><input name="phone" type="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__"><b class="em">Введите номер телефона</b></label>
         <label class="fld"><span>Ник в Telegram или ссылка</span><input name="tg" placeholder="@nickname или https://t.me/nickname"><b class="em">Укажите ник или ссылку на Telegram</b></label>
         <div id="guests-wrap" hidden><label class="fld"><span>ФИО всех зрителей</span><textarea name="guests" placeholder="По одному ФИО в строке"></textarea><small>Если приобретаете несколько билетов, укажите ФИО всех зрителей — по одному в каждой строке.</small><b class="em">Укажите ФИО каждого зрителя — по одному в строке</b></label></div>
-        <div class="group-t">Способ оплаты</div>
-        <label class="opt sel"><input type="radio" name="method" value="card" checked><div><b>Банковская карта</b><small>Откроется защищённая страница оплаты</small></div><em><i class="far fa-credit-card"></i></em></label>
-        <label class="opt"><input type="radio" name="method" value="sbp"><div><b>СБП — по QR-коду</b><small>Оплата в приложении вашего банка</small></div><em><i class="fas fa-qrcode"></i></em></label>
-        <p class="consent">Нажимая кнопку «Оплатить», вы соглашаетесь с <a href="privacy.html" target="_blank" rel="noopener">политикой конфиденциальности</a> и подтверждаете, что ознакомились с <a href="offer.html" target="_blank" rel="noopener">публичной офертой</a>.</p>
-        <button type="button" class="btn-pay" id="pay-vip">Оплатить</button>
-      </form>
-
-      <form id="form-master" class="form-card" novalidate hidden onsubmit="return false">
-        <h3>Мастер-классы · 23 января</h3>
-        <div class="group-t" style="margin-top:0">Выберите мастер-класс</div>
-        <div id="m-list"></div>
-        <p class="em" id="m-err" style="display:none;color:#ffb4b4;font-size:.85rem">Выберите хотя бы один мастер-класс</p>
-        <p class="note" style="margin-top:0">Выбрав оба класса, вы получаете Full pass по выгодной цене.</p>
-        <div class="group-t">Репост</div>
-        <label class="opt sel"><input type="radio" name="rp" value="0" checked><div><b>Без репоста</b></div></label>
-        <label class="opt"><input type="radio" name="rp" value="1"><div><b>С репостом</b><small>Цена ниже при репосте анонса контеста</small></div></label>
-        <div id="rp-link"><label class="fld"><span>Ссылка на репост</span><input name="repost" placeholder="https://…"><b class="em">Вставьте ссылку на репост</b></label></div>
-        <div class="group-t">Оплата</div>
-        <label class="opt sel"><input type="radio" name="pp" value="100" checked><div><b>100% оплата</b></div></label>
-        <label class="opt"><input type="radio" name="pp" value="50"><div><b>Предоплата 50%</b><small>Место бронируется после предоплаты</small></div></label>
-        <div class="group-t">Данные участника</div>
-        <label class="fld"><span>ФИО</span><input name="fio" autocomplete="name"><b class="em">Укажите фамилию и имя</b></label>
-        <label class="fld"><span>Почта (для чека)</span><input name="email" type="email" autocomplete="email"><b class="em">Введите корректную почту</b></label>
-        <label class="fld"><span>Телефон</span><input name="phone" type="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__"><b class="em">Введите номер телефона</b></label>
-        <label class="fld"><span>Ник в Telegram или ссылка</span><input name="tg" placeholder="@nickname"><b class="em">Укажите ник или ссылку</b></label>
-        <div class="group-t">Способ оплаты</div>
-        <label class="opt sel"><input type="radio" checked disabled><div><b>СБП — по QR-коду</b><small>Для мастер-классов оплата принимается по QR-коду СБП</small></div><em><i class="fas fa-qrcode"></i></em></label>
-        <p class="consent">Нажимая кнопку «Оплатить», вы соглашаетесь с <a href="privacy.html" target="_blank" rel="noopener">политикой конфиденциальности</a> и подтверждаете, что ознакомились с <a href="offer.html" target="_blank" rel="noopener">публичной офертой</a>.</p>
-        <button type="button" class="btn-pay" id="pay-master">Оплатить</button>
+        <p class="consent">Нажимая кнопку «Купить», вы соглашаетесь с <a href="privacy.html" target="_blank" rel="noopener">политикой конфиденциальности</a> и подтверждаете, что ознакомились с <a href="offer.html" target="_blank" rel="noopener">публичной офертой</a>.</p>
+        <button type="button" class="btn-pay" id="go-ticket">Купить</button>
       </form>
     </div>
     <aside class="side-card" id="sum"></aside>
   </div>
 </div></section>
 <div class="overlay" id="ov" role="alertdialog" aria-live="polite"></div>
-<script>
-(function(){var C=window.S1_CONFIG,h='';C.masters.list.forEach(function(m){h+='<label class="opt"><input type="checkbox" name="m" value="'+m.id+'"><div><b>'+m.name+'</b><small>'+m.style+' · '+m.time+'</small></div><em>'+C.masters.onePrice.noRepost.toLocaleString('ru-RU')+' ₽</em></label>'});document.getElementById('m-list').innerHTML=h})();
-</script>
 <script src="orders.js"></script>
 
 <footer>
@@ -136,6 +156,7 @@
             <a href="https://instagram.com/s1family_contest" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
             <a href="https://t.me/s1_contest" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a>
         </div>
+        <p class="copyright footer-docs"><a href="privacy.html">Политика конфиденциальности</a><a href="offer.html">Публичная оферта</a></p>
         <p class="copyright">Разработчик сайта: Андреев Всеволод (тг: <a href="https://t.me/se_va09" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">@se_va09</a>)</p>
         <p class="copyright footnote-ig">Instagram принадлежит компании Meta, признанной экстремистской организацией и запрещённой на территории РФ.</p>
         <p class="copyright">© 2027 S1 CONTEST — Ставрополь. Все права защищены. 23–24 января 2027</p>
