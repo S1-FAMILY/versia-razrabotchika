@@ -9,7 +9,7 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   var C = {
     /* Адрес сервера заявок. '' = тот же домен, что и сайт. */
-    apiBase: '',
+    apiBase: 'https://s1-orders.casperser636.workers.dev',
 
     event: { name: 'S1 CONTEST', dates: '23–24 января 2027', city: 'Ставрополь' },
 

@@ -100,23 +100,43 @@ function submit(type){
   var form=$('#form-'+type),btn=$('#go-'+type);if(!validate(form,type))return;
   var f=function(n){return (form.elements[n]&&form.elements[n].value||'').trim()};
   var d={type:type,fio:f('fio'),email:f('email'),phone:f('phone'),tg:f('tg'),agree:true};
-  if(type==='entry'){var s=entryState();d.dir=s.dir;d.ntype=s.nt;d.age=s.age;d.level=s.level;d.count=s.n;d.team=f('team');d.members=f('members');d.coach=f('coach');d.track=f('track')}
-  else if(type==='master'){var m=masterCalc();d.masters=m.ids;d.repost=m.rep;d.repostLink=f('repost');d.prepay=m.pre}
-  else{d.qty=qty;d.guests=f('guests')}
+  if(type==='entry'){var s=entryState();d.dir=s.dir;d.ntype=s.nt;d.age=s.age;d.level=s.level;d.count=s.n;d.team=f('team');d.members=f('members');d.coach=f('coach');d.track=f('track');d.amount=C.entryPrice(s.nt,s.n)}
+  else if(type==='master'){var m=masterCalc();d.masters=m.ids;d.repost=m.rep;d.repostLink=f('repost');d.prepay=m.pre;d.amount=m.full;d.pay=m.pay}
+  else{d.qty=qty;d.guests=f('guests');d.amount=C.tickets.presale*qty}
+  d.hp=f('hp');
   btn.disabled=true;
   showOv('<div class="spin"></div><h4>Отправляем…</h4>');
   fetch(api('/api/order'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
-   .then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'Ошибка');return j})})
+   .then(function(r){var ct=r.headers.get('content-type')||'';if(!r.ok||ct.indexOf('json')<0)throw new Error('srv');return r.json()})
    .then(function(j){btn.disabled=false;
      showOv('<h4>Спасибо, '+(type==='ticket'?'заказ':'заявка')+' принят'+(type==='ticket'?'':'а')+'!</h4><p>№ '+j.num+'. Наш администратор скоро свяжется с вами для оплаты.</p><button type="button" class="btn-pay" data-close>Хорошо</button>');
      form.reset();qty=1;$('#qty').value=1;$('#rp-link').hidden=true;render()})
-   .catch(function(e){btn.disabled=false;showOv('<h4>Не удалось отправить</h4><p>'+(e.message&&e.message!=='Failed to fetch'?e.message:'Сервер приёма заявок недоступен. Попробуйте позже или напишите нам: '+C.organizer.tg+', '+C.organizer.phone+'.')+'</p><button type="button" class="btn-pay" data-close>Закрыть</button>')});
+   .catch(function(){btn.disabled=false;fallback(d,type)});
 }
+/* Запасной путь: если сервер заявок не подключён (например, сайт на GitHub Pages) —
+   заявка не теряется: готовое письмо администратору + текст для копирования. */
+function summary(d,type){
+  var L=['S1 CONTEST 2027 — '+({entry:'заявка на участие',master:'запись на мастер-классы',ticket:'зрительские билеты'})[type],''];
+  if(type==='entry'){var st=entryState();L.push('Номинация: '+entryTitle(st));L.push('Участников: '+d.count);if(d.team)L.push('Название: '+d.team);L.push('Участники:\n'+d.members);L.push('Руководитель/хореограф: '+d.coach);if(d.track)L.push('Композиция: '+d.track);L.push('Взнос: '+rub(C.entryPrice(st.nt,st.n)))}
+  else if(type==='master'){var m=masterCalc();L.push('Мастер-классы: '+m.ids.map(function(id){return C.masters.list.filter(function(q){return q.id===id})[0].name}).join(', '));L.push('Репост: '+(m.rep?'да — '+d.repostLink:'нет'));L.push('Стоимость: '+rub(m.full)+(m.pre?', предоплата 50% ('+rub(m.pay)+')':''))}
+  else{L.push('Билетов: '+d.qty+' (предпродажа '+rub(C.tickets.presale*d.qty)+')');if(d.guests)L.push('Зрители:\n'+d.guests)}
+  L.push('','Контакт: '+d.fio,'Телефон: '+d.phone,'E-mail: '+d.email,'Telegram: '+d.tg,'','Согласен с политикой конфиденциальности и офертой.');
+  return L.join('\n')}
+function fallback(d,type){
+  var t=summary(d,type),mail=C.organizer.email,sub='S1 CONTEST 2027 — '+({entry:'заявка на участие',master:'мастер-классы',ticket:'зрительские билеты'})[type];
+  var href='mailto:'+mail+'?subject='+encodeURIComponent(sub)+'&body='+encodeURIComponent(t);
+  showOv('<h4>Почти готово</h4><p>Автоматическая отправка сейчас недоступна, но заявка не потеряется: нажмите кнопку — откроется готовое письмо администратору, останется нажать «Отправить». Наш администратор свяжется с вами для оплаты.</p>'+
+    '<textarea readonly id="fb-t" style="width:100%;height:120px;margin-top:12px;background:rgba(3,9,17,.7);color:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;font:13px/1.4 Roboto,sans-serif">'+t.replace(/</g,'&lt;')+'</textarea>'+
+    '<a class="btn-pay" style="display:block;text-decoration:none;margin-top:14px" href="'+href+'">Отправить письмом</a>'+
+    '<button type="button" class="btn-pay" id="fb-copy" style="margin-top:10px;background:transparent;color:#fff;border:1px solid var(--line-strong);box-shadow:none">Скопировать текст</button>'+
+    '<p class="note">Или напишите нам: '+C.organizer.tg+', '+C.organizer.phone+', '+mail+'</p><button type="button" class="btn-pay" data-close style="background:transparent;color:var(--muted);box-shadow:none">Закрыть</button>');
+  var c=$('#fb-copy');if(c)c.onclick=function(){var t2=$('#fb-t');t2.select();try{navigator.clipboard.writeText(t2.value)}catch(e){document.execCommand('copy')}c.textContent='Скопировано ✓'}}
 ['entry','master','ticket'].forEach(function(t){$('#go-'+t).onclick=function(){submit(t)}});
 $$('.fld input,.fld textarea,.fld select').forEach(function(i){i.addEventListener('input',function(){var w=i.closest('.fld');if(w)w.classList.remove('err')})});
 $$('input[name=phone]').forEach(function(i){i.addEventListener('input',function(){var d=i.value.replace(/\D/g,'');if(d[0]==='8')d='7'+d.slice(1);if(d&&d[0]!=='7')d='7'+d;d=d.slice(0,11);
   var o=d?'+7':'';if(d.length>1)o+=' ('+d.slice(1,4);if(d.length>=4)o+=') '+d.slice(4,7);if(d.length>=7)o+='-'+d.slice(7,9);if(d.length>=9)o+='-'+d.slice(9,11);i.value=o})});
 
+$$('form.form-card').forEach(function(fm){var i=document.createElement('input');i.name='hp';i.tabIndex=-1;i.autocomplete='off';i.setAttribute('aria-hidden','true');i.style.cssText='position:absolute;left:-9999px;opacity:0';fm.appendChild(i)});
 var q=new URLSearchParams(location.search).get('n');if(q&&NAMES[q])E('ntype').value=q;
 setTab((location.hash||'').replace('#',''));
 })();
