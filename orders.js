@@ -3,7 +3,7 @@ var C=window.S1_CONFIG,$=function(s,r){return (r||document).querySelector(s)},$$
 var rub=function(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' ₽'};
 var api=function(p){return (C.apiBase||'')+p};
 var TABS=['entry','master','ticket'],tab='entry',qty=1;
-var NAMES={solo:'SOLO',duet:'DUET',crew:'CREW'},AGES={kids:'Kids',juniors:'Juniors',adults:'Adults'},LEVELS={beginners:'Beginners',pro:'Pro'};
+var NAMES={solo:'SOLO',duet:'DUET',gen:'DUET GEN & GEN (Учитель / Ученик)',crew:'CREW'},AGES={kids:'Kids',juniors:'Juniors',adults:'Adults'},LEVELS={beginners:'Beginners',pro:'Pro'};
 
 function setTab(t){tab=TABS.indexOf(t)>-1?t:'entry';
   $$('.tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.tab===tab)});
@@ -20,16 +20,16 @@ $$('.tabs button').forEach(function(b){b.onclick=function(){setTab(b.dataset.tab
 var fe=$('#form-entry'),E=function(n){return fe.elements[n]};
 function entryState(){
   var dir=E('dir').value,nt=E('ntype').value;
-  if(dir==='lady'&&nt==='duet'){E('ntype').value='solo';nt='solo'}
-  $$('option',E('ntype')).forEach(function(o){if(o.value==='duet')o.disabled=dir==='lady'});
-  var showAge=dir==='show'&&nt!=='duet',showLevel=nt!=='duet'&&!(dir==='lady'&&nt==='crew');
+  if(dir==='lady'&&(nt==='duet'||nt==='gen')){E('ntype').value='solo';nt='solo'}
+  $$('option',E('ntype')).forEach(function(o){if(o.value==='duet'||o.value==='gen')o.disabled=dir==='lady'});
+  var dd=nt==='duet'||nt==='gen',showAge=dir==='show'&&!dd&&!(nt==='crew'&&E('age').value==='adults'&&0),showLevel=!dd&&!(dir==='lady'&&nt==='crew');
   $('#w-age').hidden=!showAge;$('#w-level').hidden=!showLevel;
   $('#w-team').hidden=nt==='solo';$('#w-count').hidden=nt!=='crew';
-  $('#l-team').textContent=nt==='duet'?'Название дуэта (необязательно)':'Название команды';
-  $('#l-members').textContent=nt==='solo'?'ФИО участника':nt==='duet'?'ФИО обоих участников':'ФИО всех участников';
+  $('#l-team').textContent=dd?'Название дуэта (необязательно)':'Название команды';
+  $('#l-members').textContent=nt==='solo'?'ФИО участника':dd?'ФИО обоих участников':'ФИО всех участников';
   $('#s-members').textContent=nt==='solo'?'':'Укажите ФИО по одному в строке.';
   $('#t-members').rows=nt==='solo'?1:5;
-  var n=nt==='solo'?1:nt==='duet'?2:Math.max(0,Math.floor(+E('count').value)||0);
+  var n=nt==='solo'?1:dd?2:Math.max(0,Math.floor(+E('count').value)||0);
   return {dir:dir,nt:nt,age:showAge?E('age').value:'',level:showLevel?E('level').value:'',n:n};
 }
 function entryTitle(s){var p=[s.dir==='lady'?"LADY'S":'SHOW',NAMES[s.nt]];if(s.age)p.push(AGES[s.age]);if(s.level)p.push(LEVELS[s.level]);return p.join(' · ')}
@@ -41,13 +41,13 @@ function render(){
       '<div class="sum-row"><span>Взнос'+(st.nt==='solo'?'':' (с человека)')+'</span><span>'+rub(unit)+'</span></div>'+
       (st.nt==='solo'?'':'<div class="sum-row"><span>Участников</span><span>× '+st.n+'</span></div>')+
       '<div class="sum-row total"><span>Итого</span><span>'+rub(total)+'</span></div>'+
-      '<p class="note">Взнос до 31.12.2026: SOLO 2 000 ₽, DUET 1 800 ₽ и CREW 1 700 ₽ с человека. С 01.01.2027: 2 400 / 2 100 / 1 900 ₽. Взнос нужно оплатить до 17 января включительно.</p>'+
+      '<p class="note">Взнос до 31.12.2026: SOLO 2 000 ₽, DUET 1 800 ₽ и CREW 1 700 ₽ с человека. С 01.01.2027: 2 400 / 2 100 / 1 900 ₽. Взнос нужно оплатить до 15 января включительно.</p>'+
       '<p class="note">Онлайн-оплаты на сайте нет: после заявки наш администратор свяжется с вами и подскажет, как оплатить. Регистрация завершена только после оплаты.</p>';
     $('#go-entry').textContent='Подать заявку';
   }else if(tab==='master'){var m=masterCalc(),tr=C.mastersTier();
     $$('[data-one]').forEach(function(e){e.textContent=rub(tr.onePrice[m.rep?'repost':'noRepost'])});
     h='<h3>Ваш заказ</h3>'+(m.ids.length?m.ids.map(function(id){var x=C.masters.list.filter(function(q){return q.id===id})[0];return '<div class="sum-row"><span>'+x.name+'</span><span>'+x.time+'</span></div>'}).join(''):'<p class="note">Выберите хотя бы один мастер-класс.</p>')+
-      (m.ids.length>=C.masters.list.length?'<div class="sum-row"><span>Full pass (2 класса)</span><span></span></div>':'')+
+      (m.ids.length>=C.masters.list.length?'<div class="sum-row"><span>Full pass (все классы)</span><span></span></div>':'')+
       '<div class="sum-row"><span>Стоимость</span><span>'+rub(m.full)+'</span></div>'+
       '<div class="sum-row total"><span>'+(m.pre?'Предоплата сейчас':'Итого')+'</span><span>'+rub(m.pay)+'</span></div>'+
       (m.pre?'<p class="note">Предоплата '+C.masters.prepayPercent+'%. '+C.masters.prepayNote+'</p>':'')+
@@ -107,11 +107,11 @@ function submit(type){
   btn.disabled=true;
   showOv('<div class="spin"></div><h4>Отправляем…</h4>');
   fetch(api('/api/order'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
-   .then(function(r){var ct=r.headers.get('content-type')||'';if(!r.ok||ct.indexOf('json')<0)throw new Error('srv');return r.json()})
+   .then(function(r){return r.json().catch(function(){return {}}).then(function(j){if(!r.ok||!j.num)throw new Error(j.error||('сервер ответил '+r.status));return j})})
    .then(function(j){btn.disabled=false;
      showOv('<h4>Спасибо, '+(type==='ticket'?'заказ':'заявка')+' принят'+(type==='ticket'?'':'а')+'!</h4><p>№ '+j.num+'. Наш администратор скоро свяжется с вами для оплаты.</p><button type="button" class="btn-pay" data-close>Хорошо</button>');
      form.reset();qty=1;$('#qty').value=1;$('#rp-link').hidden=true;render()})
-   .catch(function(){btn.disabled=false;fallback(d,type)});
+   .catch(function(e){btn.disabled=false;var m=String(e&&e.message||'');fallback(d,type,/fetch|load failed|network/i.test(m)?'нет связи с сервером заявок (проверьте адрес в config.js и ALLOWED_ORIGIN)':m)});
 }
 /* Запасной путь: если сервер заявок не подключён (например, сайт на GitHub Pages) —
    заявка не теряется: готовое письмо администратору + текст для копирования. */
@@ -122,14 +122,14 @@ function summary(d,type){
   else{L.push('Билетов: '+d.qty+' (предпродажа '+rub(C.tickets.presale*d.qty)+')');if(d.guests)L.push('Зрители:\n'+d.guests)}
   L.push('','Контакт: '+d.fio,'Телефон: '+d.phone,'E-mail: '+d.email,'Telegram: '+d.tg,'','Согласен с политикой конфиденциальности и офертой.');
   return L.join('\n')}
-function fallback(d,type){
+function fallback(d,type,why){
   var t=summary(d,type),mail=C.organizer.email,sub='S1 CONTEST 2027 — '+({entry:'заявка на участие',master:'мастер-классы',ticket:'зрительские билеты'})[type];
   var href='mailto:'+mail+'?subject='+encodeURIComponent(sub)+'&body='+encodeURIComponent(t);
   showOv('<h4>Почти готово</h4><p>Автоматическая отправка сейчас недоступна, но заявка не потеряется: нажмите кнопку — откроется готовое письмо администратору, останется нажать «Отправить». Наш администратор свяжется с вами для оплаты.</p>'+
     '<textarea readonly id="fb-t" style="width:100%;height:120px;margin-top:12px;background:rgba(3,9,17,.7);color:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;font:13px/1.4 Roboto,sans-serif">'+t.replace(/</g,'&lt;')+'</textarea>'+
     '<a class="btn-pay" style="display:block;text-decoration:none;margin-top:14px" href="'+href+'">Отправить письмом</a>'+
     '<button type="button" class="btn-pay" id="fb-copy" style="margin-top:10px;background:transparent;color:#fff;border:1px solid var(--line-strong);box-shadow:none">Скопировать текст</button>'+
-    '<p class="note">Или напишите нам: '+C.organizer.tg+', '+C.organizer.phone+', '+mail+'</p><button type="button" class="btn-pay" data-close style="background:transparent;color:var(--muted);box-shadow:none">Закрыть</button>');
+    (why?'<p class="note" style="color:#ffb4b4">Причина: '+String(why).replace(/</g,'&lt;')+'</p>':'')+'<p class="note">Или напишите нам: '+C.organizer.tg+', '+C.organizer.phone+', '+mail+'</p><button type="button" class="btn-pay" data-close style="background:transparent;color:var(--muted);box-shadow:none">Закрыть</button>');
   var c=$('#fb-copy');if(c)c.onclick=function(){var t2=$('#fb-t');t2.select();try{navigator.clipboard.writeText(t2.value)}catch(e){document.execCommand('copy')}c.textContent='Скопировано ✓'}}
 ['entry','master','ticket'].forEach(function(t){$('#go-'+t).onclick=function(){submit(t)}});
 $$('.fld input,.fld textarea,.fld select').forEach(function(i){i.addEventListener('input',function(){var w=i.closest('.fld');if(w)w.classList.remove('err')})});

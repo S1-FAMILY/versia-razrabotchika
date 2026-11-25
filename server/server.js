@@ -34,7 +34,7 @@ async function notify(text) {
   catch (e) { console.error('telegram:', e.message); }
 }
 
-const ENT = { solo: 'SOLO', duet: 'DUET', crew: 'CREW' };
+const ENT = { solo: 'SOLO', duet: 'DUET', gen: 'DUET GEN & GEN', crew: 'CREW' };
 function createOrder(req, res, d) {
   if (!d.agree) return send(res, 400, { error: 'Необходимо согласие с политикой и офертой' });
   const type = ['entry', 'master', 'ticket'].includes(d.type) ? d.type : null;
@@ -49,7 +49,7 @@ function createOrder(req, res, d) {
   if (type === 'entry') {
     o.dir = d.dir === 'lady' ? 'lady' : 'show'; o.ntype = ENT[d.ntype] ? d.ntype : null;
     if (!o.ntype) return send(res, 400, { error: 'Выберите номинацию' });
-    if (o.dir === 'lady' && o.ntype === 'duet') return send(res, 400, { error: 'В LADY\'S нет номинации DUET' });
+    
     o.age = ['kids', 'juniors', 'adults'].includes(d.age) ? d.age : ''; o.level = ['beginners', 'pro'].includes(d.level) ? d.level : '';
     o.team = clean(d.team, 100); o.members = cleanML(d.members, 3000); o.coach = clean(d.coach, 120); o.track = clean(d.track, 160);
     o.count = o.ntype === 'solo' ? 1 : o.ntype === 'duet' ? 2 : Math.floor(+d.count);

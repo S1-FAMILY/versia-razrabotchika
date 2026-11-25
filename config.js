@@ -43,8 +43,9 @@
       date: '23 января 2027',
       place: 'г. Ставрополь, ул. Перспективная, 1 Г',
       list: [
-        { id: 'alinychu', name: 'ALINYCHU',      style: 'HIP-HOP', time: '15:00' },
-        { id: 'gufranov', name: 'EGOR GUFRANOV', style: 'HIP-HOP', time: '17:00' }
+        { id: 'zaharov', name: 'Кирилл Захаров', style: 'Москва', time: 'время уточняется' },
+        { id: 'petrovskiy', name: 'Данила Петровский', style: 'Краснодар', time: 'время уточняется' },
+        { id: 'alez', name: 'Дима ALEZ', style: 'Москва / Ставрополь', time: 'время уточняется' }
       ],
       /* Тариф 1: до 01.12.2026 включительно; тариф 2: с 02.12.2026 */
       tiers: [
@@ -66,7 +67,7 @@
   C.entryPrice = function (type, n, now) {
     var t = C.entryTier(now);
     if (type === 'solo') return t.solo;
-    if (type === 'duet') return t.duet * 2;
+    if (type === 'duet' || type === 'gen') return t.duet * 2;
     return t.crew * Math.max(0, n || 0);
   };
   C.mastersTier = function (now) { return tierOf(C.masters.tiers, now); };
