@@ -20,8 +20,8 @@ $$('.tabs button').forEach(function(b){b.onclick=function(){setTab(b.dataset.tab
 var fe=$('#form-entry'),E=function(n){return fe.elements[n]};
 function entryState(){
   var dir=E('dir').value,nt=E('ntype').value;
-  if(dir==='lady'&&(nt==='duet'||nt==='gen')){E('ntype').value='solo';nt='solo'}
-  $$('option',E('ntype')).forEach(function(o){if(o.value==='duet'||o.value==='gen')o.disabled=dir==='lady'});
+  if(dir==='lady'&&nt==='gen'){E('ntype').value='solo';nt='solo'}
+  $$('option',E('ntype')).forEach(function(o){if(o.value==='gen')o.disabled=dir==='lady'});
   var dd=nt==='duet'||nt==='gen',showAge=dir==='show'&&!dd&&!(nt==='crew'&&E('age').value==='adults'&&0),showLevel=!dd&&!(dir==='lady'&&nt==='crew');
   $('#w-age').hidden=!showAge;$('#w-level').hidden=!showLevel;
   $('#w-team').hidden=nt==='solo';$('#w-count').hidden=nt!=='crew';
