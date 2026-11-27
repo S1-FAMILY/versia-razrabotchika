@@ -10,6 +10,15 @@
   var C = {
     /* Адрес сервера заявок. '' = тот же домен, что и сайт. */
     apiBase: 'https://s1-orders.casperser636.workers.dev',
+    /* Ссылки на Яндекс Формы. Пусто = кнопка ведёт на встроенную страницу заказа (order.html). */
+    forms: {
+      solo:   'https://forms.yandex.ru/u/6b08966d9029027dd790a530',
+      duet:   'https://forms.yandex.ru/u/6b089f7f28697b83023be2a1',
+      crew:   'https://forms.yandex.ru/u/6b08a12795add56e4be9ffd2',
+      master: 'https://forms.yandex.ru/u/6b08a29628697b7ec53be260',
+      ticket: 'https://forms.yandex.ru/u/6b08a4462c4f8977732c8491',
+      music:  'https://forms.yandex.ru/u/6b09ecff97a377adfd7ee954'
+    },
 
     event: { name: 'S1 CONTEST', dates: '23–24 января 2027', city: 'Ставрополь' },
 
@@ -47,10 +56,10 @@
         { id: 'petrovskiy', name: 'Данила Петровский', style: 'Краснодар', time: 'время уточняется' },
         { id: 'alez', name: 'Дима ALEZ', style: 'Москва / Ставрополь', time: 'время уточняется' }
       ],
-      /* Тариф 1: до 01.12.2026 включительно; тариф 2: с 02.12.2026 */
+      /* Тариф 1: до 31.12.2026 включительно; тариф 2: с 01.01.2026 */
       tiers: [
-        { until: '2026-12-01T23:59:59+03:00', onePrice: { repost: 2800, noRepost: 3100 }, fullPrice: { repost: 5300, noRepost: 5500 } },
-        { until: null,                         onePrice: { repost: 3300, noRepost: 3600 }, fullPrice: { repost: 5800, noRepost: 6000 } }
+        { until: '2026-12-31T23:59:59+03:00', onePrice: { repost: 2800, noRepost: 3100 }, fullPrice: { repost: 5900, noRepost: 6100 } },
+        { until: null,                         onePrice: { repost: 3300, noRepost: 3600 }, fullPrice: { repost: 6900, noRepost: 7100 } }
       ],
       prepayPercent: 50,
       prepayNote: 'Остаток необходимо внести не позднее 5 декабря.'
